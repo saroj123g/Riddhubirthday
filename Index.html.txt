@@ -1,0 +1,513 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Happy Birthday ❤️</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fff7fb;
+    --card:#fff;
+    --accent:#ff90c1;
+    --muted:#8d6a82;
+    --shadow: 0 8px 30px rgba(112, 78, 110, 0.09);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family: 'Quicksand', system-ui, -apple-system, 'Segoe UI', Roboto, "Helvetica Neue", Arial;
+    background: radial-gradient(circle at 10% 10%, #fff0f6 0%, var(--bg) 30%), linear-gradient(180deg,#fff 0%, #fff7fb 100%);
+    color:#4a2f3f;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    padding:20px;
+  }
+  .container{
+    max-width:1000px;
+    margin:20px auto;
+    padding:28px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.95));
+    border-radius:20px;
+    box-shadow:var(--shadow);
+    position:relative;
+    overflow:hidden;
+  }
+
+  header{display:flex;gap:18px;align-items:center}
+  .hero-photo{
+    width:110px;height:110px;border-radius:50%;
+    overflow:hidden;border:6px solid rgba(255,255,255,0.9);
+    box-shadow:0 6px 18px rgba(0,0,0,0.08);
+    flex:0 0 110px;
+    background:linear-gradient(#ffd4ea,#fff);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .hero-photo img{width:100%;height:100%;object-fit:cover;display:block}
+
+  h1{
+    font-family:'Great Vibes', cursive;
+    font-size:40px;margin:0;color:#c93c82; text-shadow:0 2px 0 rgba(255,255,255,0.6);
+  }
+  .sub{color:var(--muted); margin-top:6px; font-size:14px}
+
+  .controls{margin-left:auto; display:flex;gap:8px; align-items:center; flex-wrap:wrap}
+  .btn{
+    background:linear-gradient(90deg,var(--accent),#ffc0e0);
+    border:none;padding:10px 14px;border-radius:12px;color:white;font-weight:600;cursor:pointer;
+    box-shadow:0 6px 18px rgba(201,60,130,0.15);
+  }
+  .btn-muted{background:transparent;color:var(--muted);border:1px dashed rgba(120,90,110,0.12);padding:8px 10px}
+
+  main{display:grid;grid-template-columns:1fr 360px;gap:20px;margin-top:22px}
+  @media (max-width:900px){ main{grid-template-columns:1fr} .controls{width:100%; justify-content:flex-start} }
+
+  /* Left column cards */
+  .card{background:var(--card);padding:18px;border-radius:14px;box-shadow:var(--shadow); margin-bottom:16px}
+  .card h2{margin:0 0 8px 0; font-size:18px; color:#7a2f44}
+  p.small{color:#7b5a6b;font-size:14px;margin:0 0 12px 0}
+
+  /* Photo carousel */
+  .gallery{display:flex;gap:8px;overflow:auto;padding-bottom:6px}
+  .photo-thumb{
+    width:120px;height:80px;border-radius:12px;overflow:hidden;background:#f7e9ef;border:2px solid rgba(255,255,255,0.6);flex:0 0 120px;cursor:pointer; position:relative;
+  }
+  .photo-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .add-photo{display:flex;align-items:center;justify-content:center;color:#c85b92;font-weight:700;font-size:22px}
+
+  /* Cake */
+  .cake-wrap{display:flex;justify-content:center;align-items:center;flex-direction:column;gap:14px}
+  .cake{
+    width:220px;height:140px; background:linear-gradient(180deg,#fff 0%,#fff7f9 100%);
+    border-radius:18px;padding:14px;box-shadow:0 14px 30px rgba(192,96,160,0.12); position:relative;
+    display:flex;align-items:center;justify-content:center;flex-direction:column;
+  }
+  .flame{width:14px;height:20px;border-radius:10px;background:linear-gradient(180deg,#ffdf5b,#ff6a6a); position:absolute; top:-16px; opacity:0; transform:translateY(6px); transition:all .35s}
+  .candle{width:8px;height:36px;background:#fff;border-radius:3px; box-shadow:inset 0 -4px 0 rgba(0,0,0,0.04); position:relative;margin:0 4px}
+  .candles{display:flex; gap:8px; margin-bottom:8px}
+  .plate{width:180px;height:34px;background:linear-gradient(180deg,#ffeef7,#ffd8ec);border-radius:18px;margin-top:8px;box-shadow:inset 0 -6px 10px rgba(0,0,0,0.03)}
+
+  /* Message */
+  .message{font-size:18px;line-height:1.5;color:#60334a;padding:10px;background:linear-gradient(180deg,#fff, #fffbff);border-radius:10px}
+  .typewriter{font-family:'Quicksand',sans-serif}
+
+  /* Surprise */
+  .surprise-hidden{display:none}
+  .surprise-revealed{display:block}
+  .confetti-canvas{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:9999}
+
+  /* Right column (side) */
+  .side{
+    position:sticky;top:22px;
+  }
+  .player{display:flex;gap:12px;align-items:center}
+  .player img{width:60px;height:60px;border-radius:10px;object-fit:cover}
+  .player .meta{font-size:14px}
+  .small-muted{font-size:13px;color:#9d7a8a}
+
+  /* ending kiss hearts */
+  .kiss-btn{display:inline-block;padding:10px 14px;border-radius:14px;background:linear-gradient(180deg,#ffe0f1,#ffd6ec);cursor:pointer;font-weight:700}
+  .hearts{position:absolute;pointer-events:none;left:50%;transform:translateX(-50%);bottom:120px}
+
+  footer{margin-top:18px;color:#7b5a6b;font-size:13px;text-align:center}
+</style>
+</head>
+<body>
+
+<div class="container" id="page">
+  <!-- Floating hearts -->
+  <svg style="position:absolute;right:10px;top:10px;opacity:0.12" width="160" height="160" viewBox="0 0 24 24" fill="none">
+    <path d="M12 21s-6.716-4.35-9-7.08A6.12 6.12 0 0 1 3 7.5C3 4.46 5.46 2 8.5 2c1.74 0 3.4.9 4.5 2.28C14.1 2.9 15.76 2 17.5 2 20.54 2 23 4.46 23 7.5c0 2.39-1 4.67-3 6.42C18.716 16.65 12 21 12 21z" fill="#ffd0e8"/>
+  </svg>
+
+  <header>
+    <div class="hero-photo" id="heroPhoto">
+      <!-- Default photo - replace by upload -->
+      <img id="mainPhoto" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><rect width='100%' height='100%' fill='%23ffdfee'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='26' fill='%23c94b83'>Upload<br>Her Photo</text></svg>" alt="Hero">
+    </div>
+    <div>
+      <h1 id="title">Happy Birthday, Love! 🎂</h1>
+      <div class="sub" id="subtitle">A little surprise made just for you ✨</div>
+    </div>
+
+    <div class="controls">
+      <label class="btn-muted btn" title="Change photo">
+        📷 Change Photo
+        <input id="photoUpload" type="file" accept="image/*" style="display:none">
+      </label>
+      <label class="btn-muted btn" title="Add fav song">
+        🎵 Add Song
+        <input id="songUpload" type="file" accept="audio/*" style="display:none">
+      </label>
+      <button class="btn" id="revealSurpriseBtn">Reveal Surprise 🎁</button>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <!-- Gallery -->
+      <div class="card">
+        <h2>Our Memories</h2>
+        <p class="small">Click the thumbnails to view full-size. You can add your photos too.</p>
+        <div class="gallery" id="gallery">
+          <div class="photo-thumb add-photo" id="addPhotoBtn"> + Add </div>
+        </div>
+        <input id="galleryFiles" type="file" accept="image/*" multiple style="display:none">
+      </div>
+
+      <!-- Cake & Message -->
+      <div class="card cake-wrap">
+        <h2 style="width:100%;text-align:center">Birthday Cake</h2>
+        <div class="cake" id="cake">
+          <div class="candles" id="candles">
+            <div class="candle"><div class="flame" style="left:1px"></div></div>
+            <div class="candle"><div class="flame" style="left:1px"></div></div>
+            <div class="candle"><div class="flame" style="left:1px"></div></div>
+          </div>
+          <div style="font-weight:800;color:#c44482;font-size:20px">A cake for you</div>
+          <div class="plate"></div>
+        </div>
+        <button class="btn" id="lightBtn">Light Candles 🕯️</button>
+        <button class="btn-muted btn" id="blowBtn">Blow Out</button>
+      </div>
+
+      <div class="card">
+        <h2>My Message</h2>
+        <p class="small">A short typed message — it types itself for effect.</p>
+        <div class="message typewriter" id="messageBox"></div>
+      </div>
+
+      <div class="card surprise-hidden" id="surpriseCard">
+        <h2>Surprise! 🎉</h2>
+        <p class="small">Click the box to open your special gift.</p>
+        <div style="display:flex;gap:12px;flex-direction:column;align-items:center">
+          <div id="giftBox" style="width:220px;height:140px;border-radius:12px;background:linear-gradient(180deg,#fff0f6,#ffdff0);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 20px rgba(201,60,130,0.12)">
+            🎁 Tap to open
+          </div>
+          <div id="giftReveal" style="display:none;margin-top:8px; text-align:center"></div>
+        </div>
+      </div>
+
+    </section>
+
+    <aside class="side">
+      <div class="card">
+        <h2>Music Player</h2>
+        <div class="player">
+          <img id="songCover" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><rect width='100%' height='100%' fill='%23ffeef6'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='14' fill='%23c94b83'>Add a song file</text></svg>" alt="cover">
+          <div>
+            <div id="songTitle">No song added</div>
+            <div class="small-muted">Tip: Upload an MP3 to set her favourite song</div>
+            <audio id="audio" controls style="width:100%;margin-top:8px"></audio>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>End Note</h2>
+        <p class="small">Finish with a playful kiss button — hearts will float!</p>
+        <div style="text-align:center">
+          <button class="kiss-btn" id="kissBtn">Click for a kiss 💋</button>
+          <div class="hearts" id="heartLayer"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Customize</h2>
+        <p class="small">Edit title and message below.</p>
+        <input id="titleInput" placeholder="Title (e.g., Happy Birthday, Priya!)" style="width:100%;padding:8px;border-radius:8px;border:1px solid #f0d6df;margin-bottom:8px">
+        <textarea id="messageInput" rows="4" placeholder="Write your heartfelt message here..." style="width:100%;padding:8px;border-radius:8px;border:1px solid #f0d6df"></textarea>
+        <button class="btn" id="applyText">Apply</button>
+      </div>
+    </aside>
+  </main>
+
+  <footer>Made with ❤ — surprise made by you. Tip: right-click → Save page as to share the file.</footer>
+</div>
+
+<!-- Confetti canvas -->
+<canvas class="confetti-canvas" id="confettiCanvas"></canvas>
+
+<script>
+/*
+  How to use:
+  - Save this file and open in a browser.
+  - Click "Change Photo" to set her photo (or drag one into the hero).
+  - Use Add Song to attach a favorite mp3; audio will appear in the player.
+  - Add photos to the gallery with + Add.
+  - Edit title and message on the right, then Apply.
+  - Click "Light Candles" to light; "Blow Out" to extinguish. "Reveal Surprise" shows the gift.
+  - Gift box reveals a collage area (you can paste a video link or message).
+*/
+
+/* ---------- Elements ---------- */
+const photoUpload = document.getElementById('photoUpload');
+const mainPhoto = document.getElementById('mainPhoto');
+const heroPhoto = document.getElementById('heroPhoto');
+const songUpload = document.getElementById('songUpload');
+const audio = document.getElementById('audio');
+const songTitle = document.getElementById('songTitle');
+const songCover = document.getElementById('songCover');
+
+const gallery = document.getElementById('gallery');
+const addPhotoBtn = document.getElementById('addPhotoBtn');
+const galleryFiles = document.getElementById('galleryFiles');
+
+const lightBtn = document.getElementById('lightBtn');
+const blowBtn = document.getElementById('blowBtn');
+const candles = document.getElementById('candles');
+
+const revealBtn = document.getElementById('revealSurpriseBtn');
+const surpriseCard = document.getElementById('surpriseCard');
+const giftBox = document.getElementById('giftBox');
+const giftReveal = document.getElementById('giftReveal');
+
+const messageBox = document.getElementById('messageBox');
+const titleInput = document.getElementById('titleInput');
+const messageInput = document.getElementById('messageInput');
+const applyText = document.getElementById('applyText');
+
+const titleEl = document.getElementById('title');
+const kissBtn = document.getElementById('kissBtn');
+const heartLayer = document.getElementById('heartLayer');
+
+const confettiCanvas = document.getElementById('confettiCanvas');
+
+/* ---------- Photo Uploads ---------- */
+photoUpload.addEventListener('change', e=>{
+  const f = e.target.files[0];
+  if(!f) return;
+  const url = URL.createObjectURL(f);
+  mainPhoto.src = url;
+});
+
+heroPhoto.addEventListener('click', ()=>photoUpload.click());
+
+/* ---------- Song Upload ---------- */
+songUpload.addEventListener('change', e=>{
+  const f = e.target.files[0];
+  if(!f) return;
+  const url = URL.createObjectURL(f);
+  audio.src = url;
+  audio.play().catch(()=>{});
+  songTitle.textContent = f.name;
+  // try to set a cover if available (not usually inside audio) - keep default
+});
+document.querySelector('label[title="Add fav song"]').addEventListener('click', ()=>songUpload.click());
+
+/* ---------- Gallery ---------- */
+addPhotoBtn.addEventListener('click', ()=>galleryFiles.click());
+galleryFiles.addEventListener('change', e=>{
+  const files = Array.from(e.target.files);
+  files.forEach(f=>{
+    const url = URL.createObjectURL(f);
+    const div = document.createElement('div');
+    div.className = 'photo-thumb';
+    const img = document.createElement('img');
+    img.src = url;
+    div.appendChild(img);
+    div.addEventListener('click', ()=> openFullImage(url));
+    gallery.insertBefore(div, addPhotoBtn);
+  });
+});
+function openFullImage(url){
+  const w = window.open('');
+  w.document.write(`<title>Photo</title><style>body{margin:0;background:#000;display:flex;align-items:center;justify-content:center;height:100vh}img{max-width:98%;max-height:98%}</style><img src="${url}">`);
+}
+
+/* ---------- Cake Candles ---------- */
+let lit = false;
+lightBtn.addEventListener('click', ()=>{
+  if(lit) return;
+  lit = true;
+  const flames = candles.querySelectorAll('.flame');
+  flames.forEach((f,i)=>{
+    setTimeout(()=>{ f.style.opacity=1; f.style.transform='translateY(0)'; }, i*120);
+  });
+  // optional: play a soft chime
+  playChime();
+});
+blowBtn.addEventListener('click', ()=>{
+  if(!lit) return;
+  lit = false;
+  const flames = candles.querySelectorAll('.flame');
+  flames.forEach((f,i)=>{
+    setTimeout(()=>{ f.style.opacity=0; f.style.transform='translateY(6px)'; }, i*100);
+  });
+});
+
+/* small chime using WebAudio (no external files) */
+function playChime(){
+  try{
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.frequency.value = 720;
+    o.type = 'sine';
+    o.connect(g); g.connect(ctx.destination);
+    g.gain.value = 0;
+    o.start();
+    const now = ctx.currentTime;
+    g.gain.linearRampToValueAtTime(0.02, now + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, now + 1.0);
+    o.frequency.exponentialRampToValueAtTime(440, now + 1.0);
+    setTimeout(()=>{ o.stop(); ctx.close(); }, 1100);
+  }catch(e){}
+}
+
+/* ---------- Surprise reveal & gift ---------- */
+revealBtn.addEventListener('click', ()=>{
+  surpriseCard.classList.remove('surprise-hidden');
+  surpriseCard.classList.add('surprise-revealed');
+  startConfetti();
+});
+giftBox.addEventListener('click', ()=>{
+  giftReveal.style.display='block';
+  giftReveal.innerHTML = `<div style="font-weight:700;color:#c94b83">Surprise!</div>
+    <div style="margin-top:8px;color:#6b3a50">Here's a little collage I made — and a video message</div>
+    <div style="margin-top:10px"><img src="${mainPhoto.src}" style="width:160px;border-radius:10px;display:block;margin:0 auto"></div>
+    <div style="margin-top:8px"><a href="#" id="videoLink">Play my message (paste a YouTube or video URL below)</a></div>
+    <div style="margin-top:8px">
+      <input id="videoInput" placeholder="Paste a YouTube / mp4 URL here" style="width:100%;padding:8px;border-radius:8px;border:1px solid #f0d6df">
+      <button class="btn" id="attachVideo">Attach</button>
+    </div>`;
+  // attach handler
+  document.getElementById('attachVideo').addEventListener('click', ()=>{
+    const v = document.getElementById('videoInput').value.trim();
+    if(!v) return alert('Paste a link or file URL');
+    const link = document.getElementById('videoLink');
+    link.href = v;
+    link.target = '_blank';
+    link.textContent = 'Play your message';
+    startConfetti(800);
+  });
+});
+
+/* ---------- Typewriter message ---------- */
+let defaultMessage = "You are my sunshine, my favourite human. Every day with you is magic — happy birthday, my love. 💖";
+let typedIndex = 0;
+function typeMessage(msg){
+  messageBox.textContent = '';
+  typedIndex = 0;
+  const step = ()=>{
+    if(typedIndex <= msg.length){
+      messageBox.textContent = msg.slice(0, typedIndex);
+      typedIndex++;
+      setTimeout(step, 40 + Math.random()*30);
+    }
+  };
+  step();
+}
+typeMessage(defaultMessage);
+
+/* ---------- Apply text customization ---------- */
+applyText.addEventListener('click', ()=>{
+  const t = titleInput.value.trim(), m = messageInput.value.trim();
+  if(t) titleEl.textContent = t;
+  if(m) { typeMessage(m); }
+});
+
+/* ---------- Kiss hearts ---------- */
+kissBtn.addEventListener('click', ()=>{
+  for(let i=0;i<10;i++){
+    spawnHeart();
+  }
+});
+function spawnHeart(){
+  const el = document.createElement('div');
+  el.style.position='absolute';
+  el.style.left=(50 + (Math.random()*30 - 15))+'%';
+  el.style.bottom='120px';
+  el.style.transform='translateX(-50%)';
+  el.style.pointerEvents='none';
+  el.style.fontSize = (14 + Math.random()*22) + 'px';
+  el.style.opacity = '1';
+  el.innerHTML = '💖';
+  document.body.appendChild(el);
+  const end = Date.now() + 2000 + Math.random()*1200;
+  const id = setInterval(()=>{
+    const t = (end - Date.now())/2000;
+    el.style.bottom = (120 + (1-t)*220) + 'px';
+    el.style.opacity = Math.max(0, t);
+    el.style.left = (50 + Math.sin(Date.now()/200 + Math.random()*3)*10)+'%';
+    if(t<=0){ clearInterval(id); el.remove(); }
+  }, 30);
+}
+
+/* ---------- Simple confetti ----------
+   lightweight confetti implementation
+*/
+function startConfetti(duration=1400){
+  const canvas = confettiCanvas;
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const ctx = canvas.getContext('2d');
+  const pieces = [];
+  const colors = ['#ff9fcc','#ffd1e6','#fff6c2','#c4ffe1','#fdd6f2'];
+  for(let i=0;i<120;i++){
+    pieces.push({
+      x: Math.random()*canvas.width,
+      y: Math.random()*-canvas.height,
+      w: 6 + Math.random()*8,
+      h: 8 + Math.random()*10,
+      vx: -1 + Math.random()*2,
+      vy: 1 + Math.random()*3,
+      r: Math.random()*360,
+      color: colors[Math.floor(Math.random()*colors.length)],
+    });
+  }
+  let start = Date.now();
+  function render(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(p=>{
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.03;
+      ctx.save();
+      ctx.translate(p.x,p.y);
+      ctx.rotate(p.r * Math.PI/180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(0,0,p.w,p.h);
+      ctx.restore();
+    });
+    if(Date.now() - start < duration){
+      requestAnimationFrame(render);
+    } else { ctx.clearRect(0,0,canvas.width,canvas.height); }
+  }
+  render();
+}
+
+/* ---------- small UX niceties ---------- */
+/* allow drag-drop for hero photo */
+['dragenter','dragover'].forEach(ev=>{
+  heroPhoto.addEventListener(ev, e=>{
+    e.preventDefault(); heroPhoto.style.opacity=0.9;
+  });
+});
+['dragleave','drop'].forEach(ev=>{
+  heroPhoto.addEventListener(ev, e=>{
+    e.preventDefault(); heroPhoto.style.opacity=1;
+    if(ev === 'drop'){
+      const f = e.dataTransfer.files[0];
+      if(f && f.type.startsWith('image/')){
+        mainPhoto.src = URL.createObjectURL(f);
+      }
+    }
+  });
+});
+
+/* support pressing Enter on video input */
+document.addEventListener('keydown', e=>{
+  if(e.key==='Enter' && document.activeElement && document.activeElement.id==='videoInput'){
+    document.getElementById('attachVideo').click();
+  }
+});
+
+/* handle window resize for canvas */
+window.addEventListener('resize', ()=>{ confettiCanvas.width = innerWidth; confettiCanvas.height = innerHeight; });
+
+</script>
+</body>
+</html>
